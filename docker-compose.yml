@@ -3,7 +3,7 @@ version: '3'
 services:
   # MySQL
   db:
-    container_name: mysql8
+    container_name: alurafood-mysql8
     image: mysql:8.0
     ports:
       # <Port exposed> : <MySQL Port running inside container>
@@ -21,6 +21,17 @@ services:
         MYSQL_DATABASE: alurafood
         MYSQL_USER: admin
         MYSQL_PASSWORD: admin
+  rabbitmq:
+    image: rabbitmq:3.10-management
+    container_name: alurafood-rabbitmq
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+        - ./dados:/var/lib/rabbitmq/
+    environment:
+        - RABBITMQ_DEFAULT_USER=admin
+        - RABBITMQ_DEFAULT_PASS=admin
 volumes:
   mysql-volume:
     driver: local
